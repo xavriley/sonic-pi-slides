@@ -1,0 +1,8 @@
+{"version":3,
+ "file":
+ "/Users/xavierriley/Projects/sonic-pi/app/gui/html/js/generated/defpi/onload.js",
+ "sources":["onload.cljs"],
+ "lineCount":10,
+ "mappings":
+ ";AAYA;;;;AAGA,AAAM,AAAUA,gBACV,aAAA,AACE,AAACC;AACD,OAACC",
+ "names":["js/window", "defpi.ws/mk-ws", "defpi.ws/add-ws-handlers"]}

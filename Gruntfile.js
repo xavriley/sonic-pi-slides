@@ -16,7 +16,7 @@ module.exports = function(grunt) {
 		},
 
 		qunit: {
-			files: [ 'test/*.html' ]
+			// files: [ 'test/*.html' ]
 		},
 
 		uglify: {
@@ -98,7 +98,8 @@ module.exports = function(grunt) {
 
 		watch: {
 			main: {
-				files: [ 'Gruntfile.js', 'js/reveal.js', 'css/reveal.css' ],
+        options: { livereload: true },
+				files: [ 'Gruntfile.js', 'js/reveal.js', 'css/reveal.css', 'index.html' ],
 				tasks: 'default'
 			},
 			theme: {
@@ -132,6 +133,6 @@ module.exports = function(grunt) {
 	grunt.registerTask( 'serve', [ 'connect', 'watch' ] );
 
 	// Run tests
-	grunt.registerTask( 'test', [ 'jshint', 'qunit' ] );
+	// grunt.registerTask( 'test', [ 'jshint', 'qunit' ] );
 
 };

@@ -4,21 +4,46 @@
 	<head>
 		<meta charset="utf-8">
 
-		<title>reveal.js - The HTML Presentation Framework</title>
+		<title>Coding Music - as easy as Pi</title>
 
-		<meta name="description" content="A framework for easily creating beautiful presentations using HTML">
-		<meta name="author" content="Hakim El Hattab">
+		<meta name="description" content="I believe 2014 will be the year that music arrives on the web. Not just listening to music - I'm talking about composing, collaborating and performing music too. Using a new educational tool called Sonic Pi, we'll run over everything you need to know to start coding music. You might even learn the Ruby programming language in the process!
+    
+    We'll look at:
+    How - you make sounds with code.
+    Why - code has advantages over traditional tools like GarageBand and Logic.
+    Where - you can find people coding music to find out more.">
+		<meta name="author" content="Xavier Riley">
 
 		<meta name="apple-mobile-web-app-capable" content="yes" />
 		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
+    <!-- START Sonic Pi-->
+    <!-- <script src="lib/js/codemirror/lib/codemirror.js"></script> -->
+    <!-- <script src="lib/js/codemirror/addon/edit/matchbrackets.js"></script> -->
+    <!-- <script src="lib/js/codemirror/mode/ruby/ruby.js"></script> -->
+    <!-- <script src="lib/js/react-0.9.0.js"></script> -->
+
+    <link rel="stylesheet" href="lib/css/animate.css">
+    <link rel="stylesheet" href="lib/css/bootstrap/css/bootstrap.css">
+    <!-- END Sonic Pi-->
+
 		<link rel="stylesheet" href="css/reveal.min.css">
-		<link rel="stylesheet" href="css/theme/default.css" id="theme">
+		<link rel="stylesheet" href="css/theme/simple.css" id="theme">
+    <link rel="stylesheet" href="lib/js/codemirror/lib/codemirror.css">
+    <link rel="stylesheet" href="lib/css/main.css">
 
 		<!-- For syntax highlighting -->
-		<link rel="stylesheet" href="lib/css/zenburn.css">
+		<link rel="stylesheet" href="lib/css/solarized_light.css">
+
+    <style>
+    .reveal table td {
+      text-align: left;
+      padding: 0.2em 0.5em 0.2em 0.5em;
+      border-bottom: 1px solid;
+    }
+    </style>
 
 		<!-- If the query includes 'print-pdf', include the PDF print sheet -->
 		<script>
@@ -43,324 +68,620 @@
 			<!-- Any section element inside of this container is displayed as a slide -->
 			<div class="slides">
 				<section>
-					<h1>Reveal.js</h1>
-					<h3>HTML Presentations Made Easy</h3>
+					<h1>Coding music</h1>
+					<h3>As easy as Pi</h3>
 					<p>
-						<small>Created by <a href="http://hakim.se">Hakim El Hattab</a> / <a href="http://twitter.com/hakimel">@hakimel</a></small>
+						<small>Presented by <a href="http://xavierriley.co.uk">Xavier Riley</a> / <a href="http://twitter.com/xavriley">@xavriley</a></small>
 					</p>
 				</section>
 
-				<section>
-					<h2>Heads Up</h2>
-					<p>
-						reveal.js is a framework for easily creating beautiful presentations using HTML. You'll need a browser with
-						support for CSS 3D transforms to see it in its full glory.
-					</p>
+        <section>
+          <section>
+            <h1>@xavriley</h1>
+            <h3>@opencorporates</h3>
+            <p><a href="https://github.com/xavriley">github.com/xavriley</a></p>
+          </section>
+          <section>
+            <h1>What's all this about?</h1>
+            <center> <img src="lib/img/sonic-pi-web-logo.png" height="148" width="233"></center>
+            <p>A new cross-platform music programming environment that uses the Ruby programming language. It aims to teach concepts of computer science through creating music.</p>
+          </section>
+          <section>
+            <h1>Where will it work?</h1>
+            <p>It currently runs on Mac OSX (back to 10.6) and linux and is distributed with the Raspberry Pi.</p>
+            <p>Windows support is planned - volunteers wanted!</p>
+            <p><strong>Download the latest version here:</strong> <a href="http://sonic-pi.net/get-v2.0">http://sonic-pi.net/get-v2.0</a></p>
+          </section>
+          <section>
+            <h1>Who is this for?</h1>
+            <center><img src="lib/img/audience_venn.png"></center>
+          </section>
+          <section>
+            <h1>Overview</h1>
+            <ul>
+              <li class="fragment">Making music: A quick tutorial</li>
+              <li class="fragment">Under the hood: How it works</li>
+              <li class="fragment">Coda: so what?</li>
+            </ul>
+          </section>
+        </section>
 
-					<aside class="notes">
-						Oh hey, these are some notes. They'll be hidden in your presentation, but you can see them if you open the speaker notes window (hit 's' on your keyboard).
-					</aside>
-				</section>
+        <!-- This was an example of the Sonic Pi web interface -->
+				<!-- <section> -->
+          <!-- <div id="my-stage"></div> -->
+          <!-- <img src="lib/img/run.png" id="run" class=" animated bounceInLeft" onClick="defpi.ws.sendCode()" height="37" width="90"> -->
+          <!-- <img src="lib/img/stop.png" id="stop" class="animated bounceInLeft" onClick="defpi.ws.stopCode()" height="37" width="90"> -->
+          <!-- <1!-- <button id="reload" class="btn btn-success animated bounceInLeft" onClick="defpi.ws.reloadCode()">Reload</button> --1> -->
+          <!-- <div id="app-jobs" style="float: right;"></div> -->
+          <!-- <div  class="animated fadeIn"> -->
+          <!--   <textarea id="code">## Loading Buffer...</textarea> -->
+          <!-- </div> -->
+          <!-- <div id="app-messages"></div> -->
+				<!-- </section> -->
 
 				<!-- Example of nested vertical slides -->
 				<section>
-					<section>
-						<h2>Vertical Slides</h2>
-						<p>
-							Slides can be nested inside of other slides,
-							try pressing <a href="#" class="navigate-down">down</a>.
-						</p>
-						<a href="#" class="image navigate-down">
-							<img width="178" height="238" src="https://s3.amazonaws.com/hakim-static/reveal-js/arrow.png" alt="Down arrow">
-						</a>
-					</section>
-					<section>
-						<h2>Basement Level 1</h2>
-						<p>Press down or up to navigate.</p>
-					</section>
-					<section>
-						<h2>Basement Level 2</h2>
-						<p>Cornify</p>
-						<a class="test" href="http://cornify.com">
-							<img width="280" height="326" src="https://s3.amazonaws.com/hakim-static/reveal-js/cornify.gif" alt="Unicorn">
-						</a>
-					</section>
-					<section>
-						<h2>Basement Level 3</h2>
-						<p>That's it, time to go back up.</p>
-						<a href="#/2" class="image">
-							<img width="178" height="238" src="https://s3.amazonaws.com/hakim-static/reveal-js/arrow.png" alt="Up arrow" style="-webkit-transform: rotate(180deg);">
-						</a>
-					</section>
+          <section>
+            <h2>Making Music</h2>
+            <p>The four esses</p>
+            <ul>
+              <li class="fragment"><strong>s</strong>ampling</li>
+              <li class="fragment"><strong>s</strong>ynthesis</li>
+              <li class="fragment">effect<strong>s</strong></li>
+              <li class="fragment"><strong>s</strong>equencing</li>
+            </ul>
+          </section>
+
+          <section data-background="lib/img/sp-getting-help.gif">
+            <!-- <center> -->
+            <!--   <img src="lib/img/sp-getting-help.gif" rel:animated_src="lib/img/sp-getting-help.gif"> -->
+            <!-- </center> -->
+            <p><strong>But first...</strong> Using the built in tutorial and docs</p>
+          </section>
+
+          <section>
+            <h3>Sampling</h3>
+            <pre><code class="ruby">
+sample :perc_bell
+sleep 5
+
+sample :drum_cymbal_open, rate: -1
+sleep 5
+
+sample :drum_cymbal_open, rate: 0.5
+sleep 5
+
+sample :loop_amen, start: 0.5, finish: 1
+sleep 5
+
+3.times do
+  sample :loop_amen
+  sleep(sample_duration(:loop_amen))
+end
+            </code></pre>
+          </section>
+
+          <section>
+            <h3>Sampling (advanced)</h3>
+            <pre><code class="ruby">
+use_debug false
+steps = (0..1).step(1/16.0).each_cons(2).to_a
+steps.shuffle! # randomise the order
+puts steps.inspect
+
+4.times do
+  steps.each do |s, f|
+    sample :loop_amen, start: s, finish: f
+    sleep(sample_duration(:loop_amen)/16.0)
+  end
+end
+            </code></pre>
+          </section>
+
+          <section>
+            <h3>Sampling</h3>
+            <ul>
+              <li>you can load your own samples too</li>
+              <li>any .WAV file can be loaded</li>
+            </ul>
+          </section>
+
+          <section>
+            <h2>Synthesis</h2>
+            <pre><code class="ruby">
+play :c4
+sleep 3
+
+play :c4, sustain: 2
+sleep 5
+
+# Sonic Pi comes with 23 different synth sounds
+with_synth :dsaw do
+  play :c4, sustain: 2, amp: 0.3, attack: 1
+end
+            </code></pre>
+          </section>
+
+          <section>
+            <h2>Synthesis (advanced)</h2>
+            <pre><code class="ruby">
+time, synths, n, wait_time = 10, [], 30, 4
+rand_note = lambda { rrand(note(:A2), note(:A4)) }
+use_synth :dsaw
+
+n.times do
+  # collect the synths in an array for controlling later
+  synths << play(rand_note.call, detune: rrand(0,1),
+                        detune_slide: time, sustain: time,
+                        amp: (1.0/n), pan: rrand(0, 1))
+end
+sleep wait_time
+
+synths.each do |t|
+  slide_time = rrand(wait_time, (time - 2))
+  t.control note: (one_in(2) ? 70 : 46), note_slide: slide_time, detune: 0.1
+end
+            </code></pre>
+            <aside class="notes">The lamba isn't strictly necessary here but its a good example of how to assign a random value to a var</aside>
+          </section>
+
+          <section>
+            <h3>Synthesis</h3>
+            <ul>
+              <li>you can load your own "synthdefs"</li>
+              <li>these can be created in Overtone or Supercollider</li>
+            </ul>
+          </section>
+
+          <section>
+            <h2>Effects</h2>
+            <pre><code class="ruby">
+use_bpm 120
+use_synth :dsaw
+
+notes = [:a1,:a2,:g1,:g1,:g1,:g2,:e1,:e2,nil,:f1,nil,:g1,nil]
+durations = [2,2,0.66,0.66,0.66,2,2,1,1,1,1,1,1]
+
+play_pattern_timed(notes, durations)
+
+with_fx :slicer, pulse_width: 0.25 do
+  with_fx :wobble, mix: 0.5, res: 0.3, phase: 0.25 do
+    with_fx :distortion, distort: 0.99 do
+      play_pattern_timed(notes, durations)
+    end
+  end
+end
+            </code></pre>
+          </section>
+
+          <section>
+            <h3>Effects</h3>
+            <ul>
+              <li>Lots more to be done here!</li>
+            </ul>
+          </section>
+
+          <section>
+            <h2>Sequencing</h2>
+<pre><code class="ruby">
+# set bpm to the value of the :loop_amen sample
+use_bpm (60 / (sample_duration(:loop_amen)/4))
+
+in_thread(name: :master) do
+  loop do
+    3.times do
+      cue :play_backbeat
+      sleep 4
+    end
+    1.times do
+      cue :play_fill
+      sleep 4
+    end
+  end
+end
+
+in_thread(name: :beats) do
+  loop do
+    sync :play_backbeat
+    sample :loop_amen
+  end
+end
+
+in_thread(name: :fills) do
+  use_debug false
+  loop do
+    sync :play_fill
+    16.times { sample :loop_amen, start: 0.5, finish: 0.75; sleep 0.25 }
+  end
+end
+</code></pre>
+            <aside class="notes">Example is contrived but this forms the basis of "cue juggling" techniques</aside>
+          </section>
+
+          <section>
+            <h2>Stochasticism</h2>
+            <h4>(or randomness)</h4>
+<pre class="ruby"><code>
+use_random_seed(3)
+
+puts one_in(6) # returns boolean
+puts dice(6) # return int between 1 and 6
+print rrand(0, 10) # "ranged" random float
+
+# Get the current seed
+puts (Thread.current.thread_variable_get :sonic_pi_spider_random_generator).seed
+</code></pre>
+            <aside class="notes">So this isn't technically stochastic... Random gets a new seed on each run so is therefore reproducible.</aside>
+          </section>
+
+          <section>
+            <h2>Stochasticism (advanced)</h2>
+<pre class="ruby"><code>
+use_bpm 120
+
+define :randobeat do
+  # by playing with the "length" of onbeats vs offbeats
+  # we get different groove feelings
+
+  sleep_times = [0.25, 0.25]
+  sleep_times = [0.23, 0.27] if one_in(4)
+  sleep_times = [0.27, 0.23] if one_in(8)
+
+  map_to_beats(1..16).each do |b|
+    i = b[:beat_index]
+
+    sample :drum_bass_hard if (b[:beat] == 1 && b[:subdiv] == 0)
+    with_fx :reverb, mix: 0.01 do
+      synth :cnoise, attack: 0.0, sustain: 0, decay: 0.1, release: 0.05 if ([3].include?(b[:beat]) && b[:subdiv] == 0)
+      #synth :cnoise, attack: 0.0, sustain: 0, decay: 0.05, release: 0.12 if (i == 1 and one_in(8))
+      #synth :cnoise, attack: 0.0, sustain: 0, decay: 0.05, release: 0.12 if (i == 15 and one_in(8))
+    end
+
+    if b[:subdiv] == 0
+      # strong beats
+      sample :drum_cymbal_closed
+    elsif one_in(3) and b[:subdiv] == 2
+      # offbeat 8ths
+      sample :drum_cymbal_closed
+      sample :drum_bass_hard if one_in(6)
+    elsif one_in(5)
+      # offbeat 16ths
+      sample :drum_cymbal_closed
+      sample :drum_bass_hard if one_in(6)
+    end
+
+    sleep sleep_times.first if i.odd?
+    sleep sleep_times.last if i.even?
+  end
+end
+
+in_thread(name: :beat) do
+  loop { randobeat }
+end
+</code></pre>
+          </section>
+          
+          <section>
+            <h2>Algorave</h2>
+            <h4>Honourable mentions</h4>
+            <ul>
+              <li>Live coding is a real thing!</li>
+              <li>Grew out of academic work on music programming.</li>
+              <li>Check out <a href="http://toplap.org">toplap.org</a></li>
+            </ul>
+          </section>
+
+          <section>
+            <h2>Algorave</h2>
+            <h4>Meta-eX, Yaxu, Repl-electric</h4>
+              <p><iframe width="100%" height="166" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/125084411&amp;color=ff5500&amp;auto_play=false&amp;hide_related=false&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false"></iframe></p>
+              <p><a href="http://meta-ex.com/">http://meta-ex.com/</a></p>
+              <p><a href="https://github.com/meta-ex/ignite">https://github.com/meta-ex/ignite (source of that performance)</a></p>
+          </section>
+
+          <section>
+            <h2>Algorave</h2>
+            <h4>Meta-eX, Yaxu, Repl-electric</h4>
+            <p><iframe width="100%" height="166" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/164395621&amp;color=ff5500&amp;auto_play=false&amp;hide_related=false&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false"></iframe></p>
+              <p><a href="http://yaxu.org/">http://yaxu.org/</a></p>
+              <p><a href="https://github.com/yaxu/">https://github.com/yaxu/</a></p>
+          </section>
+
+          <section>
+            <h2>Algorave</h2>
+            <h4>Meta-eX, Yaxu, Repl-electric</h4>
+            <p><iframe src="//player.vimeo.com/video/95988263" width="500" height="313" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe> <p><a href="http://vimeo.com/95988263">Repl Electric - The Stars</a> from <a href="http://vimeo.com/replelectric">Repl Electric</a> on <a href="https://vimeo.com">Vimeo</a>.</p></p>
+              <p><a href="http://www.repl-electric.com/">http://www.repl-electric.com/</a></p>
+              <p><a href="https://github.com/repl-electric/cassiopeia">https://github.com/repl-electric/cassiopeia</a></p>
+          </section>
 				</section>
+
+        <section>
+          <section>
+            <h2>Under the hood</h2>
+            <p>How it works</p>
+          </section>
+
+          <section>
+            <img style="border: 0; box-shadow: 0 0 0 transparent;" src="lib/img/Sonic Pi Stack.png">
+          </section>
+
+          <section data-background="lib/img/thebigsleep.png">
+            <div style="float: right; width: 50%; background: #fff;">
+              <h2>Making music imperative</h2>
+              <p><code>sleep</code> is doing a lot more than you think</p>
+              <blockquote class="twitter-tweet" lang="en"><p>Truly honoured to have worked with <a href="https://twitter.com/dorchard">@dorchard</a> on this FARM &#39;14 paper &quot;A temporal semantics for a live coding language&quot; <a href="http://t.co/sU2xxOUTL5">http://t.co/sU2xxOUTL5</a></p>&mdash; Sam Aaron (@samaaron) <a href="https://twitter.com/samaaron/status/484766227836182528">July 3, 2014</a></blockquote>
+              <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+              <p>This is where SuperCollider > Web Audio (for now)</p>
+            </div>
+          </section>
+        </section>
+
+        <section>
+          <section data-background="lib/img/sowhat.jpg">
+            <div style="background: #fff; padding: 20px;">
+              <h2>Coda</h2>
+              <ul>
+                <li>Music as data</li>
+                <li>Rethinking the digital music stack</li>
+                <li>Code vs. DAWs</li>
+              </ul>
+            </div>
+          </section>
+
+          <section>
+            <h2>Music as data, music as text - so much left to explore here</h2>
+            <a class="fragment" href="https://gist.github.com/xavriley/8ffcacc67853fb623d3f">Here's a gist with a comment, trading some auto generating dubstep</a>
+            <p class="fragment">There's still no great DSL/text representation for melodic music - an interesting challenge for someone!</p>
+            <p class="fragment">Sonic Pi saves each workspace as a git repo! <code>~/.sonic-pi/store/default</code></p>
+          </section>
+
+          <section>
+            <h2>The digital music stack</h2>
+            <p>Are we programming at the right level of abstraction?</p>
+          </section>
+
+          <section>
+            <img style="border: 0; box-shadow: 0 0 0 transparent;" src="lib/img/ruby stack.png">
+          </section>
+
+          <section>
+            <h2>For example</h2>
+            <img style="border: 0; box-shadow: 0 0 0 transparent;" src="lib/img/music.png">
+          </section>
+
+          <section>
+            <h2>From the SuperCollider (SCLang) tutorial</h2>
+            <pre><code class="supercollider">
+(
+{                 // Open the Function
+    SinOsc.ar(    // Make an audio rate SinOsc
+        440,      // frequency of 440 Hz, or the tuning A
+        0,        // initial phase of 0, or the beginning of the cycle
+        0.2)      // mul of 0.2
+}.play;           // close the Function and call 'play' on it
+)
+            </code></pre>
+            <aside class="notes">NB that SuperCollider comes in two parts - the language and the synthesis server. Sonic Pi uses the server to generate sound, and the synthdefs and fx are compiled using the SC language</aside>
+          </section>
+
+          <section>
+            <img style="border: 0; box-shadow: 0 0 0 transparent; float: left; width: 400px;" src="lib/img/modular-synthgasm.jpg">
+            <div style="text-align: right;">
+              <p>There's a lot of detail here</p>
+              <p>SC Lang is effectively recreating the world of analog modular synthesizers in code (with 'oscillator' functions that plug into other 'oscillator' functions).</p>
+              <p>It excels at synth and sound design, but its a complex medium to sequence and arrange music.</p>
+              <p>Sonic Pi leverages the synth designs but draws a boundary. You can't create these oscillating functions directly.</p>
+              <p>It's a separation of concerns. There's a theoretical loss in the power you have, but it's also liberating not to have to worry about it. (think memory management in C)</p>
+              <p><small>(see refs: "Design, Composition and Performance")</small></p>
+            </div>
+          </section>
+
+          <section>
+            <p>Aside: Research (Hirsch - Cultural Literacy) has shown that a reader needs to understand 95% of the words in a text to have a chance of understanding it. Does the same apply to computing paradigms and syntax?</p>
+          </section>
+
+          <section>
+            <h2>Code vs. DAWs</h2>
+          </section>
+
+          <section data-background="lib/img/synth-module.jpg">
+            <blockquote style="background: rgba(255, 255, 255, 0.8)">
+              &ldquo;The other thing that's interesting is that for each of these knobs has a corresponding jack. In other words there a human interface and a machine interface to the same things. The machine interfaces were there all the time, in fact they were first, and then the human interfaces come along. We have to remember that as a design thing, right?
+
+              What's wrong with SQL?
+
+              (pause)
+
+              What's wrong with SQL is that there's no machine interface to SQL. They only designed a human interface and we've suffered ever since having to send these strings around.
+
+              You can always build a human interface on top of a machine interface. The other way round is often disgusting.&rdquo;
+            </blockquote>
+            <cite style="background: rgba(255, 255, 255, 0.8)">Rich Hickey - Design, Composition and Performance</cite>
+          </section>
+
+          <section>
+            <table style="border-spacing: 0;">
+              <thead>
+                <tr>
+                  <th>Sonic Pi</th>
+                  <th>Ableton Live</th>
+                </tr>
+              </thead>
+              <tbody>
+              <tr>
+                <td>Machine Interface</td>
+                <td>Human Interface</td>
+              </tr>
+              <tr>
+                <td>Free</td>
+                <td>€998 (on sale)</td>
+              </tr>
+              <tr>
+                <td>Expressivity</td>
+                <td>Interfaces</td>
+              </tr>
+              <tr>
+                <td>Coding</td>
+                <td>"Music Technology"</td>
+              </tr>
+              </tbody>
+            </table>
+          </section>
+
+          <section data-background="lib/img/epic-trollface.png">
+            <p class="fragment" style="background: rgba(255, 255, 255, 0.8)">
+              Of course I'm trolling here (a little bit).
+            </p>
+            <p class="fragment" style="background: rgba(255, 255, 255, 0.6)">
+              Boundaries are blurry here also: Ableton has MaxMSP and a subset of Python, Renoise has Lua scripting
+            </p>
+            <p class="fragment" style="background: rgba(255, 255, 255, 0.6)">
+              An analogy: I think Excel is an incredible tool but it makes some things impossible (e.g. you couldn't build OpenCorporates in MS Access). Think of the music that could only be made in code.
+            </p>
+          </section>
+
+          <section>
+            <pre class="ruby"><code>
+  # Transcribed from the SC140 project: http://ia600406.us.archive.org/16/items/sc140/sc140_sourcecode.txt
+  # f={|t|Pbind(\note,Pseq([-1,1,6,8,9,1,-1,8,6,1,9,8]+5,319),\dur,t)};Ptpar([0,f.(1/6),12,f.(0.1672)],1).play
+
+  # Orig. code by Batuhan Bozkurt (refactored by Charles Celeste Hutchins)
+  # Steve Reich style phasing
+  note_seq = [-1,1,6,8,9,1,-1,8,6,1,9,8]
+  note = lambda {|x| play (hz_to_midi(319) + x), release: 0.2, decay: 0.03, attack: 0.01, amp: 0.5 }
+  in_thread { loop { note_seq.each {|n| note.call(n); sleep (1.0/6) } } }
+  in_thread { loop { note_seq.each {|n| note.call(n); sleep 0.1672 } } }
+            </code></pre>
+          </section>
+        </section>
+
+        <section>
+          <h1>I'd like to thank...</h1>
+          <ul style="width: 400px; float: right;">
+            <li>Kyan for being awesome</li>
+            <li>Sam Aaron for writing Sonic Pi and answering all my questions</li>
+            <li>Scott Wilson + Birmingham Uni for starting me on the path</li>
+            <li>My wife for putting up with me whilst I wrote this</li>
+          </ul>
+
+          <img style="border: 0; box-shadow: 0 0 0 transparent; float: left; width: 400px;" src="lib/img/adele.gif">
+        </section>
 
 				<section>
-					<h2>Slides</h2>
-					<p>
-						Not a coder? No problem. There's a fully-featured visual editor for authoring these, try it out at <a href="http://slid.es" target="_blank">http://slid.es</a>.
-					</p>
-				</section>
-
-				<section>
-					<h2>Point of View</h2>
-					<p>
-						Press <strong>ESC</strong> to enter the slide overview.
-					</p>
-					<p>
-						Hold down alt and click on any element to zoom in on it using <a href="http://lab.hakim.se/zoom-js">zoom.js</a>. Alt + click anywhere to zoom back out.
-					</p>
-				</section>
-
-				<section>
-					<h2>Works in Mobile Safari</h2>
-					<p>
-						Try it out! You can swipe through the slides and pinch your way to the overview.
-					</p>
-				</section>
-
-				<section>
-					<h2>Marvelous Unordered List</h2>
-					<ul>
-						<li>No order here</li>
-						<li>Or here</li>
-						<li>Or here</li>
-						<li>Or here</li>
-					</ul>
-				</section>
-
-				<section>
-					<h2>Fantastic Ordered List</h2>
-					<ol>
-						<li>One is smaller than...</li>
-						<li>Two is smaller than...</li>
-						<li>Three!</li>
-					</ol>
-				</section>
-
-				<section data-markdown>
-					<script type="text/template">
-						## Markdown support
-
-						For those of you who like that sort of thing. Instructions and a bit more info available [here](https://github.com/hakimel/reveal.js#markdown).
-
-						```
-						<section data-markdown>
-						  ## Markdown support
-
-						  For those of you who like that sort of thing.
-						  Instructions and a bit more info available [here](https://github.com/hakimel/reveal.js#markdown).
-						</section>
-						```
-					</script>
-				</section>
-
-				<section id="transitions">
-					<h2>Transition Styles</h2>
-					<p>
-						You can select from different transitions, like: <br>
-						<a href="?transition=cube#/transitions">Cube</a> -
-						<a href="?transition=page#/transitions">Page</a> -
-						<a href="?transition=concave#/transitions">Concave</a> -
-						<a href="?transition=zoom#/transitions">Zoom</a> -
-						<a href="?transition=linear#/transitions">Linear</a> -
-						<a href="?transition=fade#/transitions">Fade</a> -
-						<a href="?transition=none#/transitions">None</a> -
-						<a href="?#/transitions">Default</a>
-					</p>
-				</section>
-
-				<section id="themes">
-					<h2>Themes</h2>
-					<p>
-						Reveal.js comes with a few themes built in: <br>
-						<a href="?#/themes">Default</a> -
-						<a href="?theme=sky#/themes">Sky</a> -
-						<a href="?theme=beige#/themes">Beige</a> -
-						<a href="?theme=simple#/themes">Simple</a> -
-						<a href="?theme=serif#/themes">Serif</a> -
-						<a href="?theme=night#/themes">Night</a> <br>
-						<a href="?theme=moon#/themes">Moon</a> -
-						<a href="?theme=solarized#/themes">Solarized</a>
-					</p>
-					<p>
-						<small>
-							* Theme demos are loaded after the presentation which leads to flicker. In production you should load your theme in the <code>&lt;head&gt;</code> using a <code>&lt;link&gt;</code>.
-						</small>
-					</p>
-				</section>
-
-				<section>
-					<h2>Global State</h2>
-					<p>
-						Set <code>data-state="something"</code> on a slide and <code>"something"</code>
-						will be added as a class to the document element when the slide is open. This lets you
-						apply broader style changes, like switching the background.
-					</p>
-				</section>
-
-				<section data-state="customevent">
-					<h2>Custom Events</h2>
-					<p>
-						Additionally custom events can be triggered on a per slide basis by binding to the <code>data-state</code> name.
-					</p>
-					<pre><code data-trim contenteditable style="font-size: 18px; margin-top: 20px;">
-Reveal.addEventListener( 'customevent', function() {
-	console.log( '"customevent" has fired' );
-} );
-					</code></pre>
-				</section>
-
-				<section>
-					<section data-background="#007777">
-						<h2>Slide Backgrounds</h2>
-						<p>
-							Set <code>data-background="#007777"</code> on a slide to change the full page background to the given color. All CSS color formats are supported.
-						</p>
-						<a href="#" class="image navigate-down">
-							<img width="178" height="238" src="https://s3.amazonaws.com/hakim-static/reveal-js/arrow.png" alt="Down arrow">
-						</a>
-					</section>
-					<section data-background="https://s3.amazonaws.com/hakim-static/reveal-js/arrow.png">
-						<h2>Image Backgrounds</h2>
-						<pre><code>&lt;section data-background="image.png"&gt;</code></pre>
-					</section>
-					<section data-background="https://s3.amazonaws.com/hakim-static/reveal-js/arrow.png" data-background-repeat="repeat" data-background-size="100px">
-						<h2>Repeated Image Backgrounds</h2>
-						<pre><code style="word-wrap: break-word;">&lt;section data-background="image.png" data-background-repeat="repeat" data-background-size="100px"&gt;</code></pre>
-					</section>
-				</section>
-
-				<section data-transition="linear" data-background="#4d7e65" data-background-transition="slide">
-					<h2>Background Transitions</h2>
-					<p>
-						Pass reveal.js the <code>backgroundTransition: 'slide'</code> config argument to make backgrounds slide rather than fade.
-					</p>
-				</section>
-
-				<section data-transition="linear" data-background="#8c4738" data-background-transition="slide">
-					<h2>Background Transition Override</h2>
-					<p>
-						You can override background transitions per slide by using <code>data-background-transition="slide"</code>.
-					</p>
-				</section>
-
-				<section>
-					<h2>Clever Quotes</h2>
-					<p>
-						These guys come in two forms, inline: <q cite="http://searchservervirtualization.techtarget.com/definition/Our-Favorite-Technology-Quotations">
-						&ldquo;The nice thing about standards is that there are so many to choose from&rdquo;</q> and block:
-					</p>
-					<blockquote cite="http://searchservervirtualization.techtarget.com/definition/Our-Favorite-Technology-Quotations">
-						&ldquo;For years there has been a theory that millions of monkeys typing at random on millions of typewriters would
-						reproduce the entire works of Shakespeare. The Internet has proven this theory to be untrue.&rdquo;
+          <h1>Thanks!</h1>
+					<blockquote>
+						&ldquo;Ah, music,&rdquo; he said, wiping his eyes. &ldquo;A magic far beyond all we do here!&rdquo;
 					</blockquote>
+          <cite>Albus Dumbledore</cite>
 				</section>
 
-				<section>
-					<h2>Pretty Code</h2>
-					<pre><code data-trim contenteditable>
-function linkify( selector ) {
-  if( supports3DTransforms ) {
+        <section>
+          <h1>References</h1>
+          <ul>
+            <li><a href="http://www.cl.cam.ac.uk/projects/raspberrypi/sonicpi/">Sonic Pi Homepage</a></li>
+            <li><a href="http://www.infoq.com/presentations/Design-Composition-Performance">Design, Composition and Performance - Rich Hickey</a></li>
+            <li><a href="http://www.earslap.com/article/recreating-the-thx-deep-note.html">Recreating the THX Deep Note</a></li>
+          </ul>
+          <p><small>Image credits: http://cdn.synthtopia.com/wp-content/uploads/2010/07/modular-synthgasm.jpg<br/>http://missrosen.files.wordpress.com/2011/11/oup-424221chandlerthebigsleep.jpg<br/>http://cps-static.rovicorp.com/3/JPG_400/MI0003/284/MI0003284914.jpg?partner=allrovi.com</small></p>
+        </section>
 
-    var nodes = document.querySelectorAll( selector );
-
-    for( var i = 0, len = nodes.length; i &lt; len; i++ ) {
-      var node = nodes[i];
-
-      if( !node.className ) {
-        node.className += ' roll';
-      }
-    }
-  }
-}
-					</code></pre>
-					<p>Courtesy of <a href="http://softwaremaniacs.org/soft/highlight/en/description/">highlight.js</a>.</p>
-				</section>
-
-				<section>
-					<h2>Intergalactic Interconnections</h2>
-					<p>
-						You can link between slides internally,
-						<a href="#/2/3">like this</a>.
-					</p>
-				</section>
-
-				<section>
-					<section id="fragments">
-						<h2>Fragmented Views</h2>
-						<p>Hit the next arrow...</p>
-						<p class="fragment">... to step through ...</p>
-						<ol>
-							<li class="fragment"><code>any type</code></li>
-							<li class="fragment"><em>of view</em></li>
-							<li class="fragment"><strong>fragments</strong></li>
-						</ol>
-
-						<aside class="notes">
-							This slide has fragments which are also stepped through in the notes window.
-						</aside>
-					</section>
-					<section>
-						<h2>Fragment Styles</h2>
-						<p>There's a few styles of fragments, like:</p>
-						<p class="fragment grow">grow</p>
-						<p class="fragment shrink">shrink</p>
-						<p class="fragment roll-in">roll-in</p>
-						<p class="fragment fade-out">fade-out</p>
-						<p class="fragment highlight-red">highlight-red</p>
-						<p class="fragment highlight-green">highlight-green</p>
-						<p class="fragment highlight-blue">highlight-blue</p>
-						<p class="fragment current-visible">current-visible</p>
-						<p class="fragment highlight-current-blue">highlight-current-blue</p>
-					</section>
-				</section>
-
-				<section>
-					<h2>Spectacular image!</h2>
-					<a class="image" href="http://lab.hakim.se/meny/" target="_blank">
-						<img width="320" height="299" src="http://s3.amazonaws.com/hakim-static/portfolio/images/meny.png" alt="Meny">
-					</a>
-				</section>
-
-				<section>
-					<h2>Export to PDF</h2>
-					<p>Presentations can be <a href="https://github.com/hakimel/reveal.js#pdf-export">exported to PDF</a>, below is an example that's been uploaded to SlideShare.</p>
-					<iframe id="slideshare" src="http://www.slideshare.net/slideshow/embed_code/13872948" width="455" height="356" style="margin:0;overflow:hidden;border:1px solid #CCC;border-width:1px 1px 0;margin-bottom:5px" allowfullscreen> </iframe>
-					<script>
-						document.getElementById('slideshare').attributeName = 'allowfullscreen';
-					</script>
-				</section>
-
-				<section>
-					<h2>Take a Moment</h2>
-					<p>
-						Press b or period on your keyboard to enter the 'paused' mode. This mode is helpful when you want to take distracting slides off the screen
-						during a presentation.
-					</p>
-				</section>
-
-				<section>
-					<h2>Stellar Links</h2>
-					<ul>
-						<li><a href="http://slid.es">Try the online editor</a></li>
-						<li><a href="https://github.com/hakimel/reveal.js">Source code on GitHub</a></li>
-						<li><a href="http://twitter.com/hakimel">Follow me on Twitter</a></li>
-					</ul>
-				</section>
-
-				<section>
-					<h1>THE END</h1>
-					<h3>BY Hakim El Hattab / hakim.se</h3>
-				</section>
-
+        <section>
+          <h4>Big old list of bookmarks from research</h4>
+          <code><pre style="height: 500px; overflow: scroll;">
+http://www.earslap.com/instruction/recreating-the-thx-deep-note
+http://www.earslap.com/instruction/running-baudline-on-mac-os-x
+http://magpi.techjeeper.com/The-MagPi-issue-23-en.pdf
+https://gist.github.com/urbanautomaton/11ce2acb775d1bc24898
+https://gist.github.com/aaron-santos/3651346
+https://github.com/philandstuff/ldnclj-dojo-2014-05/blob/master/src/ldnclj_dojo_2014_05/core.clj
+https://www.youtube.com/watch?v=ghDpcGuUUm4
+http://sonic-pi.net/get-v2.0
+http://www.fredrikolofsson.com/pages/code-sc.html
+file://localhost/Users/xavierriley/Downloads/f0plugins36/Atari2600/Atari2600.html
+http://supercollider.sourceforge.net/audiocode-examples/
+http://www.mmlshare.com/tracks/view/403
+http://www.mmlshare.com/tracks/view/378
+http://home.ieis.tue.nl/dhermes/lectures/soundperception/htmlfiles/fmFm.html
+http://www.michaelbromley.co.uk/blog/105/what-makes-a-good-tech-talk
+http://pastebin.com/uYvrqANQ
+http://www.reddit.com/r/chiptunes/
+http://gibber.mat.ucsb.edu/
+http://diydsp.com/livesite/
+https://github.com/stagas/audio-process
+http://studio.substack.net/wavepot
+https://watilde.github.io/beeplay/
+http://blog.chrislowis.co.uk/waw/2014/06/14/web-audio-weekly-19.html
+http://www.openscad.org/
+http://musicforgeeksandnerds.com/
+http://toplap.org/
+http://wavepot.com/
+http://www.acm.org/search?SearchableText=music
+https://soundcloud.com/repl-electric/sets/live-coding
+http://www.mcld.co.uk/blog/blog.php?235
+http://www.generalguitargadgets.com/effects-projects/distortion/rat/
+http://superdupercollider.blogspot.co.uk/2009/05/crushing-bits-for-fun-and-profit.html
+https://github.com/overtone/overtone/blob/master/src/overtone/studio/fx.clj
+https://en.wikipedia.org/wiki/Chiptune
+http://www.nullsleep.com/treasure/mck_guide/
+https://en.wikipedia.org/wiki/Music_Macro_Language
+http://www.mariopiano.com/mario-sheet-music-overworld-main-theme.html
+http://elinux.org/RPi_Text_to_Speech_(Speech_Synthesis)
+http://new-supercollider-mailing-lists-forums-use-these.2681727.n2.nabble.com/Text-To-speech-td4520252.html
+http://tm.durusau.net/?p=54881&utm_source=dlvr.it&utm_medium=twitter
+http://www.infoq.com/presentations/programming-language-communication
+https://www.facebook.com/media/set/?set=a.691766514210545.1073741881.109367642450438&type=1
+http://slidedeck.io/about
+http://toplap.org/overtone/
+http://hg.postspectacular.com/resonate-2013/src/0cbf14634d51/src/resonate2013/?at=default
+https://www.ableton.com/en/trial/
+https://en.wikibooks.org/wiki/Sound_Synthesis_Theory
+http://daveyarwood.github.io/music/2014/08/23/introducing-riffmuse/?utm_source=dlvr.it&utm_medium=twitter
+http://www.renoise.com/products/renoise
+http://thelackthereof.org/wiki.rss/Overtone_Adventures
+http://supercollider.calumgunn.com/
+http://toplap.org/tidal/
+http://www.creativefront.org/projects-and-events/events/thesummit
+http://www.sussex.ac.uk/Users/nc81/modules/cm1/workshop.html
+http://www.sussex.ac.uk/Users/nc81/modules/cm1/scfiles/11.1%20Physical%20Modelling.html
+http://www.sussex.ac.uk/Users/nc81/modules/cm1/scfiles/11.2%20Analogue%20Modelling.html
+http://cambridge105.fm/podcasts/105-drive-09-09-2014/?utm_source=dlvr.it&utm_medium=twitter
+http://webmagazin.de/en/Whats-it-like-to-work-for-Ableton-173156
+https://www.youtube.com/watch?v=TePRrmX9g3U
+http://www.infoq.com/presentations/Design-Composition-Performance
+http://www.kylegann.com/histune.html
+https://github.com/TONEnoTONE/Tone.js
+https://skillsmatter.com/skillscasts/5511-a-gentle-introduction-to-music-theory-in-ruby
+          </pre></code>
+        </section>
 			</div>
 
 		</div>
 
 		<script src="lib/js/head.min.js"></script>
+    <!-- <script src="lib/js/init_editor.js"></script> -->
+    <!-- <script src="lib/js/generated/goog/base.js" type="text/javascript"></script> -->
+    <!-- <script src="lib/js/cljs-main.js" type="text/javascript"></script> -->
+    <!-- <script type="text/javascript">goog.require("defpi.onload");</script> -->
+
+
+    <!-- <script src="lib/js/libgif-js/libgif.js"></script> -->
+    <!-- <script src="lib/js/libgif-js/rubbable.js"></script> -->
 		<script src="js/reveal.min.js"></script>
 
 		<script>
+      // Setup controls for gifs
+      // var imgs = document.getElementsByTagName('img');
+      // 
+      // for(var i = 0; i < imgs.length; i++) {
+      //   var img_tag = imgs[i];
+      //   if (/.*\.gif/.test(img_tag.src)) {
+      //     var rub = new SuperGif({ gif: img_tag, auto_play: true, rubbable: true } );
+      //     rub.load(function(){
+      //         console.log('oh hey, now the gif is loaded');
+      //         });
+      //   }
+      // };
 
 			// Full list of configuration options available here:
 			// https://github.com/hakimel/reveal.js#configuration
@@ -390,5 +711,6 @@ function linkify( selector ) {
 
 		</script>
 
+    <script src="//localhost:35729/livereload.js"></script>
 	</body>
 </html>
