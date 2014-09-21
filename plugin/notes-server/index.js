@@ -1,10 +1,13 @@
-var express   = require('express');
+var http = require('http');
+var express = require("express");
 var fs        = require('fs');
 var io        = require('socket.io');
 var _         = require('underscore');
 var Mustache  = require('mustache');
 
-var app       = express.createServer();
+var app = express();
+app.use(express.logger());
+app.use("/", express.static(__dirname));
 var staticDir = express.static;
 
 io            = io.listen(app);
