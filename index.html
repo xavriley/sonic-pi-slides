@@ -78,8 +78,9 @@
         <section>
           <section>
             <h1>@xavriley</h1>
-            <h3>@opencorporates</h3>
-            <p><a href="https://github.com/xavriley">github.com/xavriley</a></p>
+            <h3>works at: @opencorporates</h3>
+            <p>slides: <a href="http://sonic-pi-talk.herokuapp.com/">sonic-pi-talk.herokuapp.com</a></p>
+            <p>github: <a href="https://github.com/xavriley">github.com/xavriley</a></p>
           </section>
           <section>
             <h1>What's all this about?</h1>
@@ -90,19 +91,61 @@
             <h1>Where will it work?</h1>
             <p>It currently runs on Mac OSX (back to 10.6) and linux and is distributed with the Raspberry Pi.</p>
             <p>Windows support is planned - volunteers wanted!</p>
-            <p><strong>Download the latest version here:</strong> <a href="http://sonic-pi.net/get-v2.0">http://sonic-pi.net/get-v2.0</a></p>
+            <p><strong>Download the latest version here:</strong> <a href="http://sonic-pi.net/">http://sonic-pi.net/</a></p>
           </section>
           <section>
             <h1>Who is this for?</h1>
             <center><img src="lib/img/audience_venn.png"></center>
+            <aside class="notes">Everybody is somewhere on a spectrum of ability with coding or music. Sonic Pi is ideal if you're a total beginner in either (or both!)</aside>
           </section>
           <section>
-            <h1>Overview</h1>
-            <ul>
-              <li class="fragment">Making music: A quick tutorial</li>
-              <li class="fragment">Under the hood: How it works</li>
-              <li class="fragment">Coda: so what?</li>
-            </ul>
+            <center><img src="lib/img/boring.jpg"></center>
+            <h3>Please ask questions!</h3>
+            <aside class="notes">I don't want you looking like this</aside>
+          </section>
+        </section>
+
+        <section>
+          <h1>Overview</h1>
+          <ul>
+            <li class="fragment">Overture: a love story in 3 acts</li>
+            <li class="fragment">Making music: A quick tutorial</li>
+            <li class="fragment">Under the hood: How it works</li>
+            <li class="fragment">Coda: so what?</li>
+          </ul>
+        </section>
+
+        <section>
+          <section>
+            <h1>Overture: a love story in 3 acts</h1>
+            <h3>My personal coding journey</h3>
+          </section>
+
+          <section>
+            <h3>Act 1: Interactive Music with Creative Computing</h3>
+            <aside class="notes">My introduction to programming was not making websites, but making music.
+            I did Music at Birmingham where a lecturer called Scott Wilson ran this module. We learnt the basics of programming using
+            SuperCollider, which is an open source audio synthesis language written by James McCartney, now senior Audio guy at Apple.
+            I liked programming but I had a really hard time learning SuperCollider. I couldn't remember, let alone understand, what all the strange symbols and punctuation meant
+            and it made my head hurt. For my dissertation, I chickened out of using SuperCollider and used MaxMSP instead. It's a graphical programming environment similar to scratch.
+            At the time Scott warned me with a prophecy. He said: "The GUI option might look more attractive on the face of it, but you'll never harness the true power of using code."
+            I didn't heed the warning. I worked so hard on that dissertation - it was a 10 minute live performance with saxophone, drums and my MaxMSP program which I'm still very proud of.
+            It was a complete success, but only because I'd arrive in the studios at 9 and stay till 2 or 3am some days.</aside>
+          </section>
+
+          <section>
+            <h3>Act 2: Becoming a professional programmer</h3>
+            <aside class="notes">My experience with SuperCollider scarred me a little bit. It was a long time before I wanted to learn to program again. I left uni, moved home and got a job in
+            a music shop. I'd done some playing around with HTML and Photoshop, and put myself forward to redesign their creaking FrontPage site. Iteration 1 was an Excel spreadsheet with a VBA
+            macro written by my Computer Science friend that exported a HTML fragment for each line and FTPed them straight onto the server. Nobody had told me about PHP or databases yet.
+            Eventually I got over my fear of coding and dived in. PHP, then Ruby and I've never looked back.</aside>
+          </section>
+
+          <section>
+            <h3>Act 3: Coming back to music</h3>
+            <aside class="notes">I've been a professional programmer for about 6 years now and thanks to some good jobs and great colleagues I'm not the hopeless case I once was. I never stopped 
+            being interested in music though. Earlier this year, when I heard that Sam Aaron had written a Ruby frontend to SuperCollider I hoped it was something I could get my teeth into. A few
+            months in, I'm still excited to be able to code music and I want to share some of that with you today.</aside>
           </section>
         </section>
 
@@ -129,6 +172,9 @@
               <li class="fragment"><strong>s</strong>ynthesis</li>
               <li class="fragment">effect<strong>s</strong></li>
               <li class="fragment"><strong>s</strong>equencing</li>
+              <li class="fragment">(and for bonus points)</li>
+              <li class="fragment"><strong>s</strong>tochasticism</li>
+              <li class="fragment">Algorave</li>
             </ul>
           </section>
 
@@ -137,6 +183,10 @@
             <!--   <img src="lib/img/sp-getting-help.gif" rel:animated_src="lib/img/sp-getting-help.gif"> -->
             <!-- </center> -->
             <p><strong>But first...</strong> Using the built in tutorial and docs</p>
+          </section>
+
+          <section>
+            <p>Since I proposed this talk, Sonic Pi has shipped with great documentation and an extensive tutorial full of examples. You should check that out first - what follows is a quick run through.</p>
           </section>
 
           <section>
@@ -176,6 +226,7 @@ puts steps.inspect
   end
 end
             </code></pre>
+            <aside class="notes">This took me about 3 months to create in MaxMSP! I was using it with a live drummer though...</aside>
           </section>
 
           <section>
@@ -319,6 +370,24 @@ puts (Thread.current.thread_variable_get :sonic_pi_spider_random_generator).seed
 <pre class="ruby"><code>
 use_bpm 120
 
+define :map_to_beats do |index_range|
+  index_range = Array(index_range)
+
+  if (index_range.length % 4 == 0)
+    onbeats = index_range.each_slice(4).map(&:first)
+
+    index_range.map {|i|
+      @current_beat = (onbeats.index(i) + 1) if (i % 4 == 1)
+      {
+        beat: @current_beat,
+        subdiv: ((i - 1) % 4),
+        onbeat: i.odd?,
+        beat_index: i
+      }
+    }
+  end
+end
+
 define :randobeat do
   # by playing with the "length" of onbeats vs offbeats
   # we get different groove feelings
@@ -332,9 +401,7 @@ define :randobeat do
 
     sample :drum_bass_hard if (b[:beat] == 1 && b[:subdiv] == 0)
     with_fx :reverb, mix: 0.01 do
-      synth :cnoise, attack: 0.0, sustain: 0, decay: 0.1, release: 0.05 if ([3].include?(b[:beat]) && b[:subdiv] == 0)
-      #synth :cnoise, attack: 0.0, sustain: 0, decay: 0.05, release: 0.12 if (i == 1 and one_in(8))
-      #synth :cnoise, attack: 0.0, sustain: 0, decay: 0.05, release: 0.12 if (i == 15 and one_in(8))
+      sample :elec_blip if b[:beat] == 3 and b[:subdiv] == 0
     end
 
     if b[:subdiv] == 0
@@ -412,8 +479,18 @@ end
               <p><code>sleep</code> is doing a lot more than you think</p>
               <blockquote class="twitter-tweet" lang="en"><p>Truly honoured to have worked with <a href="https://twitter.com/dorchard">@dorchard</a> on this FARM &#39;14 paper &quot;A temporal semantics for a live coding language&quot; <a href="http://t.co/sU2xxOUTL5">http://t.co/sU2xxOUTL5</a></p>&mdash; Sam Aaron (@samaaron) <a href="https://twitter.com/samaaron/status/484766227836182528">July 3, 2014</a></blockquote>
               <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
-              <p>This is where SuperCollider > Web Audio (for now)</p>
+              <p>AFAIK SuperCollider has better scheduling support than HTML5 WebAudio (for now)</p>
             </div>
+          </section>
+
+          <section>
+            <h2>sleep explained</h2>
+            <p>One of the motivations for Sonic Pi was to model music in a way kids could understand</p>
+            <p>The other was the target of the Raspberry Pi which is not exactly high powered</p>
+            <p>Using <code>sleep</code> feels a bit more like programming BASIC which is easier to grasp for beginners</p>
+            <p>For performance, Sonic Pi inserts a tiny gap at the start of each run, and which gives it just enough time to schedule the events</p>
+            <p>It fails gracefully if it can't schedule the event in time because, in music, missing a beat is better than playing it out of time</p>
+            <p>Read the paper linked above for a full explanation</p>
           </section>
         </section>
 
@@ -443,6 +520,7 @@ end
 
           <section>
             <img style="border: 0; box-shadow: 0 0 0 transparent;" src="lib/img/ruby stack.png">
+            <aside class="notes">Programmers know about levels of abstraction. We spend a lot of time thinking about it. In other domains the distinction between levels isn't as clear.</aside>
           </section>
 
           <section>
@@ -472,7 +550,7 @@ end
               <p>SC Lang is effectively recreating the world of analog modular synthesizers in code (with 'oscillator' functions that plug into other 'oscillator' functions).</p>
               <p>It excels at synth and sound design, but its a complex medium to sequence and arrange music.</p>
               <p>Sonic Pi leverages the synth designs but draws a boundary. You can't create these oscillating functions directly.</p>
-              <p>It's a separation of concerns. There's a theoretical loss in the power you have, but it's also liberating not to have to worry about it. (think memory management in C)</p>
+              <p>It's a separation of concerns. There's a theoretical loss in the power you have, but it's also liberating not to have to worry about it. (think memory management in C vs. GC in Ruby)</p>
               <p><small>(see refs: "Design, Composition and Performance")</small></p>
             </div>
           </section>
@@ -542,16 +620,28 @@ end
           </section>
 
           <section>
-            <pre class="ruby"><code>
-  # Transcribed from the SC140 project: http://ia600406.us.archive.org/16/items/sc140/sc140_sourcecode.txt
-  # f={|t|Pbind(\note,Pseq([-1,1,6,8,9,1,-1,8,6,1,9,8]+5,319),\dur,t)};Ptpar([0,f.(1/6),12,f.(0.1672)],1).play
+            <h2>A concrete example</h2>
+            <p>The day after I wrote this, I saw this piece on programming Reddit</p>
+            <a href="http://medium.com/@jaschaephraim/launching-one-clip-at-a-time-in-ableton-live-9-with-the-apc40-d2b72985d2a9">Launching One Clip at a Time in Ableton Live 9 with the APC40
+            Using Python MIDI Remote Scripts</a>
+            <p>It's over 1000 words. Do you still think Hickey's choice of words was too strong?</p>
+          </section>
 
-  # Orig. code by Batuhan Bozkurt (refactored by Charles Celeste Hutchins)
-  # Steve Reich style phasing
-  note_seq = [-1,1,6,8,9,1,-1,8,6,1,9,8]
-  note = lambda {|x| play (hz_to_midi(319) + x), release: 0.2, decay: 0.03, attack: 0.01, amp: 0.5 }
-  in_thread { loop { note_seq.each {|n| note.call(n); sleep (1.0/6) } } }
-  in_thread { loop { note_seq.each {|n| note.call(n); sleep 0.1672 } } }
+          <section>
+            <h4>To finish: a piece that couldn't be written in Ableton</h4>
+            <pre class="ruby"><code>
+# Transcribed from the SC140 project: http://ia600406.us.archive.org/16/items/sc140/sc140_sourcecode.txt
+# f={|t|Pbind(\note,Pseq([-1,1,6,8,9,1,-1,8,6,1,9,8]+5,319),\dur,t)};Ptpar([0,f.(1/6),12,f.(0.1672)],1).play
+
+# Orig. code by Batuhan Bozkurt (refactored by Charles Celeste Hutchins)
+# Steve Reich style phasing
+# Pan added by me
+note_seq = [-1,1,6,8,9,1,-1,8,6,1,9,8]
+note = ->(x) { play (63 + x), release: 0.2, 
+               pan: ->{rrand(0.4, 0.6)}, decay: 0.01, 
+               attack: 0.005, amp: 0.4 }
+in_thread { loop { note_seq.each {|n| note.call(n); sleep (1.0/6) } } }
+in_thread { loop { note_seq.each {|n| note.call(n); sleep 0.1672 } } }
             </code></pre>
           </section>
         </section>
